@@ -1,5 +1,3 @@
----
-
 # 🚀 Account App Documentation
 
 ## Purpose
