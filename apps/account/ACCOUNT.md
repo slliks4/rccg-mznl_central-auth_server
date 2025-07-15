@@ -87,6 +87,34 @@ Linked via OneToOne to `CustomUser`, providing:
 
 ---
 
+## Serializers
+My serializers for account handles create, and delete therefore simplifying the view logic
+
+## Views
+### Create User
+
+
+
+
+## OTP Verification (This prevent spamming of user creation)
+flows
+
+User creation
+create_user
+
+
+
+
+
+
+
+k
+
+
+
+
+
+
 ## 🌐 Third-Party Authentication Ready
 
 * By default, `password=None` enables OAuth/third-party auth.

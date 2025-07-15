@@ -84,3 +84,10 @@ class CustomUserProfile(models.Model):
 
     def __str__(self):
         return f'Profile for {self.user.email}'
+
+
+@receiver(post_save, sender=CustomUser)
+def create_profile(sender, instance, created, **kwargs):
+    if created:
+        profile = CustomUserProfile(user=instance)
+        profile.save()

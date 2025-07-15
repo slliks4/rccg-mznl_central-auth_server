@@ -9,10 +9,6 @@ A centralized authentication system built with Django REST Framework (DRF) to ma
    * UUID primary key, email as `USERNAME_FIELD`, optional phone and avatar.
    * Why: Provides a flexible identity schema and consistent user ID across apps.
 
-2. OTP Email Verification
-   * Cache‑backed, hashed one‑time codes (5–10 min TTL).
-   * Why: Prevents spam sign‑ups and ensures valid email ownership before DB writes.
-
 3. JWT Authentication
    * Endpoints for token obtain/refresh via DRF Simple JWT.
    * Why: Offers stateless, scalable sessions suited to SPAs and microservices.
@@ -25,11 +21,21 @@ A centralized authentication system built with Django REST Framework (DRF) to ma
    * `.env` support via `django-environ`.
    * Why: Aligns with 12‑factor principles and secures sensitive credentials.
 
-6. Rate Limiting & Throttling
-   * Protects `/send-otp/` and `/verify-otp/` from abuse.
-   * Why: Ensures system availability and defends against brute‑force attacks.
+## ✅ MVP Scope (Now)
 
----
+- [x] `/auth/register/`  
+  - Validate email (unique)
+  - Validate password (Django password validators)
+  - Save user with `set_password()`
+
+- [x] `/auth/token/`  
+  - Use `TokenObtainPairView`
+
+- [x] `/auth/token/refresh/`  
+  - Use `TokenRefreshView`
+
+- [x] `/account/me`  
+  - Use `TokenRefreshView`
 
 ## 📚 Documentation
 
@@ -40,9 +46,74 @@ A centralized authentication system built with Django REST Framework (DRF) to ma
 
 ---
 
-## 🔜 Post‑MVP & Future Updates
 
-After your first client is integrated, we’ll expand with:
+---
+
+## 🔜 Post‑MVP & Future Updates
+This document outlines upcoming features and enhancements for the authentication system that will be added after MVP launch. The current version includes only:
+
+### 🔐 OTP Email Verification
+
+- [ ] `/auth/register/start/`  
+  - Validates email/password
+  - Throttled by IP/email
+  - Sends hashed 6-digit OTP via email
+  - Signature create
+  - Stores temporary data in Redis (or cache backend)
+
+- [ ] `/auth/register/confirm/`  
+  - verifies signature before it proceeds
+  - Validates OTP
+  - On success, creates user
+
+- [ ] Cache store: Redis or Memcached  
+  - Set up for OTP + future throttling
+
+### 🚫 Throttling & Anti-Spam
+
+- [ ] Per-IP and per-email throttling on OTP endpoints  
+- [ ] Add reCAPTCHA (if needed) for public routes  
+- [ ] Debounce email to prevent OTP flood
+
+### 📬 Email System
+
+- [ ] Integrate SMTP or third-party (e.g., SendGrid)  
+- [ ] Add backend for templated email sending  
+- [ ] Support async email queue (via Celery)
+
+### 🔄 Password Reset
+
+- [ ] `/auth/password/reset/`  
+  - Accepts email, sends reset link (signed token)
+
+- [ ] `/auth/password/reset/confirm/`  
+  - Accepts token + new password
+  - Validates strength
+
+### 📱 Forgot Email (Phone Verified)
+
+- [ ] `/auth/email/lookup/`  
+  - Accepts phone number
+  - Returns masked email(s) if phone matches verified user
+
+### 🛡️ Production Settings (JWT & Cache)
+
+- [ ] Configure Simple JWT securely:
+  - Access token: 15m
+  - Refresh token: 7d
+  - Rotation + blacklist support
+
+- [ ] Setup production cache backend:
+  - Replace LocMemCache with Redis
+  - Configure timeouts, security
+
+### 🧩 Nice to have Add-ons
+
+- [ ] Social login (Google, Apple) via `django-allauth`  
+- [ ] Email magic links  
+- [ ] Admin audit logging for auth attempts  
+- [ ] 2FA (SMS or TOTP)  
+- [ ] Session revocation and login history  
 
 * Lifecycle Hooks (`on_create`, `on_update`, `on_delete`)
   Notify downstream apps of account events for data federation.
@@ -58,6 +129,7 @@ After your first client is integrated, we’ll expand with:
 
 ---
 
+---
 ## 🎯 Professional Rationale
 
 1. Lean MVP First

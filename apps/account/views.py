@@ -1,3 +1,8 @@
-from django.shortcuts import render
+# apps.account.views
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
 
-# Create your views here.
+
+@api_view(['GET'])
+def get_user(request):
+    return Response({'status': 200})
