@@ -47,7 +47,7 @@ class RegistrationSerializer(serializers.ModelSerializer):
         _ = validated_data.pop('confirm_password', '')
 
         # Instantiate (but don't hit unique constraints twice)
-        user = CustomUser(email=validated_data['email'], is_active=False)
+        user = CustomUser(email=validated_data['email'])
         user.save()
 
         # Handle password or mark unusable

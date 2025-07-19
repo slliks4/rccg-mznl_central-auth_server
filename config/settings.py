@@ -45,6 +45,14 @@ INSTALLED_APPS = [
     'apps.auth.apps.CustomAuthConfig',
 ]
 
+# Simple Jwt
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework_simplejwt.authentication.JWTAuthentication',
+    )
+}
+
+# MiddleWare
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

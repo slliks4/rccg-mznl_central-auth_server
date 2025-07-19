@@ -1,8 +1,12 @@
 # Account url config
 from django.urls import path
 
-from apps.account.views import get_user
+from apps.account.views import UserRetrieveAPIView
 
 urlpatterns = [
-    path('me', get_user, name='get_user'),
+    path(
+        'me',  # route
+        UserRetrieveAPIView.as_view(),  # view
+        name='user-detail'  # name
+    ),
 ]

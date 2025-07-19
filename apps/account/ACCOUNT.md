@@ -96,24 +96,6 @@ My serializers for account handles create, and delete therefore simplifying the 
 
 
 
-## OTP Verification (This prevent spamming of user creation)
-flows
-
-User creation
-create_user
-
-
-
-
-
-
-
-k
-
-
-
-
-
 
 ## 🌐 Third-Party Authentication Ready
 

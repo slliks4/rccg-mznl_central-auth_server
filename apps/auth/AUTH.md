@@ -1,5 +1,4 @@
-
-A **professional-grade registration system** has clear objectives:
+# A **professional-grade registration system** has clear objectives:
 
 * Prevent spam or bot sign-ups (security)
 * Ensure a frictionless, smooth UX

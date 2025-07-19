@@ -1,8 +1,18 @@
-# apps.account.views
-from rest_framework.decorators import api_view
-from rest_framework.response import Response
+# apps/account/views.py
+
+from typing import Any
+
+from rest_framework import generics, permissions
+
+from .serializers import UserReadSerializer
 
 
-@api_view(['GET'])
-def get_user(request):
-    return Response({'status': 200})
+class UserRetrieveAPIView(generics.RetrieveAPIView):
+    serializer_class = UserReadSerializer
+    permission_classes = [permissions.IsAuthenticated]
+
+    def get_object(self) -> Any:
+        """
+        Return the current authenticated user
+        """
+        return self.request.user
