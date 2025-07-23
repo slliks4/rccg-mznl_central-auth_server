@@ -12,7 +12,9 @@ A centralized authentication system built with Django REST Framework (DRF) to ma
 3. JWT Authentication
    * Endpoints for token obtain/refresh via DRF Simple JWT.
    * Why: Offers stateless, scalable sessions suited to SPAs and microservices.
-
+   * Setup Blacklist and Rotate refresh tokens for security
+   * setup CORS
+ 
 4. User Info Endpoint (`/api/account/me/`)
    * Returns ID, email, pic, roles, and groups(contain permissions).
    * Why: Standardizes identity checks for all consumer apps without re‑implementing logic.
